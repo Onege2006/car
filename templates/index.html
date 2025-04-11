@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Velvoro-CarGallery</title>
+  <link rel="icon" type="image/png" href="/static/favicon.png">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">Velvoro-CarGallery</div>
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" id="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+<li><a href="#add-car">Add Car</a></li>
+    <li><a href="/login">Login</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <h1>Welcome to the Car Gallery</h1>
+  <p>Discover, share, and admire the most beautiful cars in the world.</p>
+  <a href="#gallery" class="btn">Explore Gallery</a>
+</header>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('nav-links');
+    nav.classList.toggle('active');
+  }
+</script>
+
+<section class="detail-section" id="gallery">
+  <div class="detail-content">
+    <div class="detail-text">
+  <p class="pre-heading">Powered by Velvoro</p>
+  <h2 class="main-heading">Elegance in motion.</h2>
+  <p class="sub-heading">
+    Where automotive beauty meets personal expression.
+  </p>
+</div>
+
+
+ <div class="detail-gallery">
+  {% for car in cars %}
+    <div class="car-photo">
+      <img src="{{ car.image_url }}" alt="{{ car.title }}">
+    </div>
+  {% endfor %}
+</div>
+
+
+
+      <div class="detail-video">
+      <video id="velvoroVideo" autoplay muted playsinline></video>
+    </div>
+
+      <section class="add-car-lux" id="add-car">
+  <div class="container">
+    <h2 class="lux-title">Showcase Your Masterpiece</h2>
+    <form method="post" action="/add" oninput="updatePreview()" class="lux-form">
+      <div class="lux-left">
+        <div class="lux-field">
+          <label>Title</label>
+          <input type="text" name="title" required>
+        </div>
+        <div class="lux-field">
+          <label>Brand</label>
+          <input type="text" name="brand" required>
+        </div>
+        <div class="lux-field">
+          <label>Year</label>
+          <input type="number" name="year" required>
+        </div>
+        <div class="lux-field">
+          <label>Description</label>
+          <textarea name="description" rows="4"></textarea>
+        </div>
+        <div class="lux-field">
+          <label>Image URL</label>
+          <input type="url" id="image_url" name="image_url" required>
+        </div>
+        <button class="lux-btn" type="submit">Upload Car</button>
+      </div>
+      <div class="lux-right">
+        <p class="preview-text">Preview</p>
+        <div class="lux-preview">
+          <img id="car-preview" src="" alt="Car preview" />
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+  </div>
+</section>
+
+
+<script>
+    const videos = [
+        "https://videos.pexels.com/video-files/29498796/12698099_678_360_24fps.mp4",
+        "https://videos.pexels.com/video-files/6159208/6159208-sd_640_360_30fps.mp4",
+        "https://videos.pexels.com/video-files/4031700/4031700-sd_640_360_25fps.mp4",
+        "https://videos.pexels.com/video-files/29498807/12698159_678_360_24fps.mp4",
+        "https://videos.pexels.com/video-files/29498822/12698147_678_360_24fps.mp4",
+        "https://videos.pexels.com/video-files/6159281/6159281-sd_640_360_30fps.mp4"
+    ];
+
+    const videoElement = document.getElementById("velvoroVideo");
+    let currentIndex = 0;
+
+    function playNextVideo() {
+        videoElement.src = videos[currentIndex];
+        videoElement.load();
+        videoElement.play();
+
+        currentIndex = (currentIndex + 1) % videos.length;
+    }
+
+    videoElement.addEventListener("ended", playNextVideo);
+
+    // First load
+    playNextVideo();
+
+    function updatePreview() {
+    const url = document.getElementById("image_url").value;
+    const img = document.getElementById("car-preview");
+    img.src = url;
+  }
+
+</script>
+
+<footer class="lux-footer">
+  <div class="lux-footer-content">
+    <p class="lux-footer-text">© 2025 Velvoro. Author: <span>Alibek Onege</span></p>
+    <div class="lux-socials">
+      <a href="#" title="TikTok"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tiktok.svg" alt="TikTok" /></a>
+      <a href="#" title="Instagram"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/instagram.svg" alt="Instagram" /></a>
+      <a href="#" title="Telegram"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/telegram.svg" alt="Telegram" /></a>
+      <a href="#" title="GitHub"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" alt="GitHub" /></a>
+      <a href="#" title="LinkedIn"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" /></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

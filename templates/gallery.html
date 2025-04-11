@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gallery – Velvoro</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Velvoro</div>
+
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/gallery">Gallery</a></li>
+      <li><a href="/add">Add Car</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+  </nav>
+
+  <section class="gallery-section">
+    <h1 class="gallery-title">Explore the Collection</h1>
+    <div class="gallery-grid">
+      {% for car in cars %}
+        <div class="gallery-card">
+          <img src="{{ car.image_url }}" alt="{{ car.title }}">
+          <div class="card-details">
+            <h3>{{ car.title }}</h3>
+            <p>{{ car.brand }} • {{ car.year }}</p>
+            <p class="desc">{{ car.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('nav-links');
+      nav.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
